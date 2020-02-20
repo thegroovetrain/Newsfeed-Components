@@ -85,7 +85,14 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
-  }
+  },
+  {
+    title: 'Foo',
+    date: 'Apr 1st, 2020',
+    firstParagraph: `Lorem ipsum dolor amet aesthetic plaid lomo kitsch VHS. Church-key kinfolk snackwave, waistcoat prism trust fund 8-bit green juice YOLO health goth ennui. Cronut butcher shaman, irony kinfolk synth taxidermy selvage taiyaki fashion axe echo park. Lyft raclette aesthetic tumeric, street art lomo schlitz photo booth twee copper mug hot chicken ramps skateboard. XOXO master cleanse street art aesthetic truffaut hammock jean shorts small batch cronut vexillologist. Man bun sustainable locavore, heirloom skateboard chambray twee kinfolk shabby chic jean shorts migas williamsburg. Man bun selvage wolf sustainable ennui, single-origin coffee helvetica.`,
+    secondParagraph: `VHS portland fam umami, raclette iceland af lo-fi leggings everyday carry fashion axe DIY. Waistcoat enamel pin adaptogen raw denim live-edge. Kickstarter master cleanse yr palo santo tacos tote bag post-ironic. Kombucha 90's direct trade farm-to-table meh, cold-pressed tbh affogato vegan taiyaki wolf 8-bit tousled. 3 wolf moon taiyaki blog occupy williamsburg gluten-free brunch waistcoat glossier whatever drinking vinegar craft beer kinfolk trust fund. Butcher affogato intelligentsia, air plant unicorn aesthetic food truck microdosing wolf.`,
+    thirdParagraph: `Kogi cold-pressed man braid photo booth butcher flexitarian. Fingerstache pour-over deep v kickstarter blue bottle, succulents roof party flexitarian. Air plant street art flannel iPhone. Four loko quinoa tumeric, mumblecore 3 wolf moon cloud bread chicharrones messenger bag selvage synth venmo fam deep v actually palo santo. Etsy neutra tbh small batch wolf mlkshk.`
+  },
 ];
 
 /* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
@@ -112,3 +119,57 @@ const data = [
   Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
 
 */
+
+class Article {
+  constructor(args) {
+    this.state = {
+      title: args.title,
+      date: args.date,
+      firstParagraph: args.firstParagraph,
+      secondParagraph: args.secondParagraph,
+      thirdParagraph: args.thirdParagraph,
+    }
+  }
+
+  render() {
+    const article = document.createElement('article');
+    article.classList.add('article');
+
+    const title = document.createElement('h2');
+    title.textContent = this.state.title;
+    article.appendChild(title);
+
+    const date = document.createElement('p');
+    date.classList.add('date');
+    date.textContent = this.state.date;
+    article.appendChild(date);
+
+    const firstParagraph = document.createElement('p');
+    firstParagraph.textContent = this.state.firstParagraph;
+    article.appendChild(firstParagraph);
+
+    const secondParagraph = document.createElement('p');
+    secondParagraph.textContent = this.state.secondParagraph;
+    article.appendChild(secondParagraph);
+
+    const thirdParagraph = document.createElement('p');
+    thirdParagraph.textContent = this.state.thirdParagraph;
+    article.appendChild(thirdParagraph);
+
+    const expandButton = document.createElement('span');
+    expandButton.classList.add('expandButton');
+    expandButton.textContent = '+';
+    expandButton.addEventListener('click', (event) => {
+      article.classList.toggle('article-open');
+    });
+    article.appendChild(expandButton);
+
+    return article;
+  }
+}
+
+const articles = data.map((element) => {
+  let article = new Article(element);
+  document.querySelector('.articles').appendChild(article.render());
+  return article;
+});
